@@ -28,7 +28,11 @@ export class UserService {
     }
     const newUser = new UserEntity();
     Object.assign(newUser, createUserDto);
-    return await this.userRepository.save(newUser);
+    
+    const createdUser = await this.userRepository.save(newUser);
+    delete createdUser.password;
+
+    return createdUser;
   }
 
   async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
